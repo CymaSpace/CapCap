@@ -267,7 +267,7 @@ void setup()
     });
 
     mqtt_label = lv_label_create(lv_scr_act());
-    lv_label_set_text(mqtt_label, "Test Message"); // Add this line
+    lv_label_set_text(mqtt_label, "Captions will appear here."); // Add this line
     
     mqtt_setup();
 }

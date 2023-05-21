@@ -2,6 +2,7 @@
 #include "Arduino.h"
 #include "SD_MMC.h"
 #include "lvgl.h"
+#include "mqtt.h"
 
 LV_FONT_DECLARE(font_Alibaba);
 LV_IMG_DECLARE(lilygo1_gif);
@@ -28,6 +29,7 @@ void ui_begin() {
   lv_obj_t *tv1 = lv_tileview_add_tile(dis, 0, 0, LV_DIR_VER);
   lv_obj_t *tv2 = lv_tileview_add_tile(dis, 0, 1, LV_DIR_VER);
   lv_obj_t *tv3 = lv_tileview_add_tile(dis, 0, 2, LV_DIR_VER);
+  lv_obj_t *tv4 = lv_tileview_add_tile(dis, 0, 3, LV_DIR_VER);
   /* page 1 */
   lv_obj_t *main_cout = lv_obj_create(tv1);
   lv_obj_set_size(main_cout, LV_PCT(100), LV_PCT(100));
@@ -87,7 +89,15 @@ void ui_begin() {
   lv_gif_set_src(logo_img, &lilygo1_gif);
 
   /* page 3 */
-  lv_obj_t *debug_label = lv_label_create(tv3);
+  // Create MQTT Label
+  mqtt_label = lv_label_create(tv3); // This label will be used to display incoming MQTT messages
+  lv_obj_center(mqtt_label);
+  lv_obj_set_style_text_font(mqtt_label, &font_Alibaba, 0);
+  lv_label_set_text(mqtt_label, ""); // Initially set it to empty string
+  lv_obj_set_style_text_color(mqtt_label, UI_FONT_COLOR, 0);
+
+   /* page 4 */
+  lv_obj_t *debug_label = lv_label_create(tv4);
   String text;
   esp_chip_info_t t;
   esp_chip_info(&t);

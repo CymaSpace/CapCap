@@ -1,35 +1,38 @@
 #include "mqtt.h"
 #include <WiFi.h>
+#include <cstring>
 
 const char* mqtt_server = "192.168.1.132";
+const char* caption_topic = "caption_text";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
 
+String received_text; // Variable to store the received caption text
+
 void callback(char* topic, byte* payload, unsigned int length) {
-    char messageTemp[length+1];
-    payload[length] = '\0'; // Ensure payload is null-terminated
-    strncpy(messageTemp, (char*)payload, length);
-    Serial.print("Received message on topic: ");
-    Serial.print(topic);
-    Serial.print(". Message: ");
-    Serial.println(messageTemp);
+  // Convert payload to string
+  char message[length + 1];
+  strncpy(message, (char*)payload, length);
+  message[length] = '\0';
+
+  // Append the received sentence to the accumulated text
+  received_text += message;
+
+  // Add a newline character for new sentences
+  received_text += "\n";
 
   // Set the label text on your screen
-  lv_label_set_text(mqtt_label, messageTemp);
+  lv_label_set_text(mqtt_label, received_text.c_str());
 }
 
 void reconnect() {
-  // Loop until we're reconnected
   while (!client.connected()) {
     if (client.connect("ESP32Client")) {
-      // Once connected, publish an announcement...
-      client.publish("outTopic", "hello world");
-      // ... and resubscribe
-      client.subscribe("state");
+      // Once connected, subscribe to the caption topic
+      client.subscribe(caption_topic);
     } else {
-      // Wait 5 seconds before retrying
-      delay(5000);
+      delay(5000); // Wait 5 seconds before retrying connection
     }
   }
 }
