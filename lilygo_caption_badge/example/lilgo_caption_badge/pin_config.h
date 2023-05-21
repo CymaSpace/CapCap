@@ -4,7 +4,7 @@
 // #define WIFI_PASSWORD                "Your-password"
 
 #define WIFI_SSID                    "CymaSpace_2.4G"
-#define WIFI_PASSWORD                "wifi-password"
+#define WIFI_PASSWORD                "cym4spac3"
 
 #define WIFI_CONNECT_WAIT_MAX        (30 * 1000)
 

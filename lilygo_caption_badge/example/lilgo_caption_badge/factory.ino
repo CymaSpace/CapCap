@@ -23,12 +23,13 @@
 #include "sntp.h"
 #include "time.h"
 
+#include "mqtt.h"
 #include "zones.h"
 #include <HTTPClient.h>
 #include <WiFiClientSecure.h>
 
+lv_obj_t *mqtt_label;
 
-// The factory program uses the Chinese time zone by default.
 // Commenting this line will automatically get the time zone, provided that the SSL certificate is valid.
 // Please pay attention to check the validity of the certificate.
 // The current configuration certificate is valid until April 16, 2024
@@ -133,6 +134,9 @@ static void lv_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data
 
 void setup()
 {
+
+
+
     // (POWER ON)IO15 must be set to HIGH before starting, otherwise the screen will not display when using battery
     pinMode(PIN_POWER_ON, OUTPUT);
     digitalWrite(PIN_POWER_ON, HIGH);
@@ -261,7 +265,15 @@ void setup()
     button2.attachClick([]() {
         ui_switch_page();
     });
+
+    mqtt_label = lv_label_create(lv_scr_act());
+    lv_label_set_text(mqtt_label, "Test Message"); // Add this line
+    
+    mqtt_setup();
 }
+
+
+
 
 void loop()
 {
@@ -281,7 +293,14 @@ void loop()
 
         last_tick = millis();
     }
+
+    // Handle MQTT tasks
+    if (!client.connected()) {
+        reconnect();
+    }
+    client.loop();
 }
+
 
 LV_IMG_DECLARE(lilygo2_gif);
 
