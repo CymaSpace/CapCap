@@ -1,6 +1,11 @@
 # CapCap
 Networked wearable captioning devices for offline and online use cases with portability in mind.
 
+### TODO
+[] Resolve ./stream -- unable to open audio capture device on ODROID1.
+[x] 23-05-22 Add whisper.cpp & tiny-en model [4]
+* Tested to work using ```arecord -D hw:1,0 -f S24_3LE -r 44100 -c 2 --duration=10 test.wav``` 
+* blocked by ```./stream -m models/ggml-tiny.en.bin --step 4000 --length 8000 -t 4 -ac 512```. Issue: Unable to open audio device for capture.
 
 ## Dev Log
 
