@@ -1,6 +1,18 @@
 # CapCap
 Networked wearable captioning devices for offline and online use cases with portability in mind.
 
+CapCap (Captioning Cap) is a ground-breaking initiative driven by a dedicated team of Deaf creative problem solvers from the non-profit organization CymaSpace. This project stands out by providing an accessible, affordable, and open-source solution to enhance communication for individuals who are Deaf or hard-of-hearing.
+
+Key to CapCap's innovation is its commitment to reducing the economic barriers that often limit access to captioning technology. By leveraging open-source hardware and software and incorporating a permissive open source license, the project aims to bring down the cost of the necessary hardware from the typical thousands of dollars to several hundred. This opens up opportunities for a wider range of individuals and organizations to access and benefit from this crucial communication tool.
+
+In addition to its affordability, CapCap offers a distinctive approach to communication accessibility with its open captioning design. Rather than restricting captions to personal devices or AR glasses where only the user can view them, CapCap uses badges and captioning wearables that make the captions visible to everyone. This creates an inclusive and interactive environment, encouraging everyone to be mindful of their speech clarity, turn-taking, and the overall auditory environment to improve the accuracy of captions.
+
+The technical elements of CapCap further support its mission of inclusivity and accessibility. The project utilizes OpenAI's Whisper AI captioning model, known for its offline capability, to convert spoken language into captions in real-time. This will aleviate common privacy concerns that conflict with the mass of adoption of captioning in public spaces since no audio data or transcripts are stored or sent over the internet. This model is integrated into wearable, battery-powered badges that can work on affordable SoC boards, specifically ESP32 microcontrollers for the wearable badges with microphones and a captioning server running on a Raspberry Pi.
+
+Moreover, the CapCap system is designed to enable offline synchronization of captions and accurate speaker identification, ensuring a seamless communication experience. With a strong emphasis on user-friendliness and accessibility, these badges are designed with the unique needs of the Deaf and hard-of-hearing community in mind.
+
+In conclusion, CapCap's approach, which balances affordability, inclusivity, and advanced technology, promises a major shift in the landscape of communication for individuals who are Deaf or hard-of-hearing. By leading with its key benefits, the project provides a solution that empowers more individuals and communities to foster inclusive communication environments.
+
 ### TODO
 [] Resolve ./stream -- unable to open audio capture device on ODROID1.
 [x] 23-05-22 Add whisper.cpp & tiny-en model [4]
