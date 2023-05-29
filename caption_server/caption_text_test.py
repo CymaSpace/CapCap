@@ -23,17 +23,27 @@ client.on_publish = on_publish
 # Connect to the MQTT broker
 client.connect(mqtt_broker, mqtt_port)
 
-# Publish three lines of text
+# Publish three lines of text, looping three times
 lines = [
     "This is the first line.",
     "This is the second line.",
-    "This is the third line."
+    "This is the third line.",
+    "This is the 4th line.",
+    "This is the 5th line.",
+    "This is the 6th line.",
+    "This is the 7th line.",
+    "This is the 8th line. It is extra long to simulate a long run-on sentence.",
+    "This is the 9th line.",
+    "This is the 10th line.",
 ]
 
-for line in lines:
-    client.publish(topic, line)
-    print("Published line:", line)
-    time.sleep(3) # Adjust the delay time as needed
+loop_count = 3  # Number of times to loop the lines
+
+for _ in range(loop_count):
+    for line in lines:
+        client.publish(topic, line)
+        print("Published line:", line)
+        time.sleep(3)  # Adjust the delay time as needed
 
 # Disconnect from the MQTT broker
 client.disconnect()

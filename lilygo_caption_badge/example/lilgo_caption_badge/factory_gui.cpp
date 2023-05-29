@@ -30,8 +30,17 @@ void ui_begin() {
   lv_obj_t *tv2 = lv_tileview_add_tile(dis, 0, 1, LV_DIR_VER);
   lv_obj_t *tv3 = lv_tileview_add_tile(dis, 0, 2, LV_DIR_VER);
   lv_obj_t *tv4 = lv_tileview_add_tile(dis, 0, 3, LV_DIR_VER);
-  /* page 1 */
-  lv_obj_t *main_cout = lv_obj_create(tv1);
+
+  /* page 1 MQTT Captions */
+  // Create MQTT Label
+  mqtt_label = lv_label_create(tv1); // This label will be used to display incoming MQTT messages
+  lv_obj_center(mqtt_label);
+  lv_obj_set_style_text_font(mqtt_label, &font_Alibaba, 0);
+  lv_label_set_text(mqtt_label, ""); // Initially set it to empty string
+  lv_obj_set_style_text_color(mqtt_label, UI_FONT_COLOR, 0);
+
+  /* page 2 */
+  lv_obj_t *main_cout = lv_obj_create(tv2);
   lv_obj_set_size(main_cout, LV_PCT(100), LV_PCT(100));
   lv_obj_clear_flag(main_cout, LV_OBJ_FLAG_SCROLLABLE);
   lv_obj_set_style_border_width(main_cout, 0, 0);
@@ -83,18 +92,10 @@ void ui_begin() {
   lv_obj_add_style(line, &style_line, 0);
   lv_obj_center(line);
 
-  /* page 2 */
-  lv_obj_t *logo_img = lv_gif_create(tv2);
+  /* page 3 */
+  lv_obj_t *logo_img = lv_gif_create(tv3);
   lv_obj_center(logo_img);
   lv_gif_set_src(logo_img, &lilygo1_gif);
-
-  /* page 3 */
-  // Create MQTT Label
-  mqtt_label = lv_label_create(tv3); // This label will be used to display incoming MQTT messages
-  lv_obj_center(mqtt_label);
-  lv_obj_set_style_text_font(mqtt_label, &font_Alibaba, 0);
-  lv_label_set_text(mqtt_label, ""); // Initially set it to empty string
-  lv_obj_set_style_text_color(mqtt_label, UI_FONT_COLOR, 0);
 
    /* page 4 */
   lv_obj_t *debug_label = lv_label_create(tv4);

@@ -301,17 +301,28 @@ void loop()
     client.loop();
 }
 
+// Comment out Lilygo Bootup Gif
+// LV_IMG_DECLARE(lilygo2_gif);
 
-LV_IMG_DECLARE(lilygo2_gif);
+// Add CymaSpace Logo Declaration
+LV_IMG_DECLARE(cymaspace);
 
 void wifi_test(void)
 {
     String text;
-    lv_obj_t *logo_img = lv_gif_create(lv_scr_act());
-    lv_obj_center(logo_img);
-    lv_gif_set_src(logo_img, &lilygo2_gif);
-    LV_DELAY(1200);
-    lv_obj_del(logo_img);
+// Comment out Lilygo Bootup Gif
+//    lv_obj_t *logo_img = lv_gif_create(lv_scr_act());
+//    lv_obj_center(logo_img);
+//    lv_gif_set_src(logo_img, &lilygo2_gif);
+//    LV_DELAY(1200);
+//   lv_obj_del(logo_img);
+
+// Add CymaSpace Logo
+//    lv_obj_t *logo_img = lv_gif_create(lv_scr_act());
+//    lv_obj_center(logo_img);
+//    lv_gif_set_src(logo_img, &cymaspace);
+//    LV_DELAY(1000);
+//    lv_obj_del(logo_img);
 
     lv_obj_t *log_label = lv_label_create(lv_scr_act());
     lv_obj_align(log_label, LV_ALIGN_TOP_LEFT, 0, 0);
