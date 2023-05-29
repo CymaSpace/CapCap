@@ -4,6 +4,14 @@
 #include "lvgl.h"
 #include "mqtt.h"
 
+// global variables to manage the list and its items:
+static lv_obj_t *mqtt_list;
+static lv_obj_t **mqtt_list_items;
+static const uint8_t max_lines = 10;  // Adjust this according to the size of your display
+static uint8_t cur_lines = 0;
+static lv_obj_t *placeholder_label; // Placeholder to display before receiving MQTT messages
+
+
 LV_FONT_DECLARE(font_Alibaba);
 LV_IMG_DECLARE(lilygo1_gif);
 static lv_point_t line_points[] = {{-320, 0}, {320, 0}};
@@ -32,12 +40,28 @@ void ui_begin() {
   lv_obj_t *tv4 = lv_tileview_add_tile(dis, 0, 3, LV_DIR_VER);
 
   /* page 1 MQTT Captions */
+  // initialize the list and the array of list items:
+  mqtt_list = lv_list_create(tv1);
+
+  // Create a placeholder label to display before receiving MQTT messages
+  placeholder_label = lv_label_create(mqtt_list);
+  lv_label_set_text(placeholder_label, "Captions will appear here.");
+
+  lv_obj_set_size(mqtt_list, LV_PCT(100), LV_PCT(100));
+  mqtt_list_items = (lv_obj_t**) malloc(max_lines * sizeof(lv_obj_t*));
+
+
   // Create MQTT Label
   mqtt_label = lv_label_create(tv1); // This label will be used to display incoming MQTT messages
   lv_obj_center(mqtt_label);
   lv_obj_set_style_text_font(mqtt_label, &font_Alibaba, 0);
   lv_label_set_text(mqtt_label, ""); // Initially set it to empty string
   lv_obj_set_style_text_color(mqtt_label, UI_FONT_COLOR, 0);
+
+  // Allocate memory for mqtt_list_items
+  mqtt_list_items = (lv_obj_t**) malloc(max_lines * sizeof(lv_obj_t*));
+  cur_lines = 0;
+
 
   /* page 2 */
   lv_obj_t *main_cout = lv_obj_create(tv2);
@@ -157,6 +181,27 @@ static void update_text_subscriber_cb(lv_event_t *e) {
 
   lv_label_set_text_fmt(label, fmt, *v);
 }
+
+// Add a new MQTT message to the list.
+// Removes the oldest message if the maximum number of messages has been reached:
+void add_mqtt_message(const char* msg) {
+  
+  // Create a new label for the message
+  lv_obj_t* new_label = lv_label_create(mqtt_list);
+  lv_label_set_text(new_label, msg);
+
+    // Replace the oldest message if we've reached max_lines
+  if (cur_lines >= max_lines) {
+    lv_obj_t *old_label = mqtt_list_items[cur_lines % max_lines];
+    lv_obj_del(old_label);
+  }
+
+  mqtt_list_items[cur_lines % max_lines] = new_label;
+  cur_lines++;
+
+  lv_obj_scroll_to_view_recursive(new_label, LV_ANIM_ON);
+}
+
 
 static void update_touch_point_subscriber_cb(lv_event_t *e) {
   lv_obj_t *label = lv_event_get_target(e);

@@ -1,4 +1,5 @@
 #include "mqtt.h"
+#include "factory_gui.h" // Include this to have access to add_mqtt_message function
 #include <WiFi.h>
 #include <cstring>
 
@@ -8,22 +9,14 @@ const char* caption_topic = "caption_text";
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-String received_text; // Variable to store the received caption text
-
 void callback(char* topic, byte* payload, unsigned int length) {
   // Convert payload to string
   char message[length + 1];
   strncpy(message, (char*)payload, length);
   message[length] = '\0';
 
-  // Append the received sentence to the accumulated text
-  received_text += message;
-
-  // Add a newline character for new sentences
-  received_text += "\n";
-
-  // Set the label text on your screen
-  lv_label_set_text(mqtt_label, received_text.c_str());
+  // Append the received message using the new function
+  add_mqtt_message(message);
 }
 
 void reconnect() {

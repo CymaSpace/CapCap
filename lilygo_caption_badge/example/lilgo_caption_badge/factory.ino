@@ -266,8 +266,9 @@ void setup()
         ui_switch_page();
     });
 
-    mqtt_label = lv_label_create(lv_scr_act());
-    lv_label_set_text(mqtt_label, "Captions will appear here."); // Add this line
+// Quick Message Test on Boot.
+//    mqtt_label = lv_label_create(lv_scr_act());
+//    lv_label_set_text(mqtt_label, "Captions will appear here."); // Add this line
     
     mqtt_setup();
 }

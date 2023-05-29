@@ -21,3 +21,4 @@
 
 void ui_begin();
 void ui_switch_page(void);
+void add_mqtt_message(const char* msg);
