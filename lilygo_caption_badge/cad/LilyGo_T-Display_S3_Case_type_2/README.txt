@@ -1,0 +1,1 @@
+Case for a Lilygo T-Display S3 (without header pins) by Zapdos on Thingiverse: https://www.thingiverse.com/thing:5696011

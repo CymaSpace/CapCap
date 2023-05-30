@@ -13,13 +13,28 @@ Moreover, the CapCap system is designed to enable offline synchronization of cap
 
 In conclusion, CapCap's approach, which balances affordability, inclusivity, and advanced technology, promises a major shift in the landscape of communication for individuals who are Deaf or hard-of-hearing. By leading with its key benefits, the project provides a solution that empowers more individuals and communities to foster inclusive communication environments.
 
+### Resources
+[1] https://betterprogramming.pub/color-your-captions-streamlining-live-transcriptions-with-diart-and-openais-whisper-6203350234ef -- python implementation of whisper AI plus real-time (padding 30 secs minimum with silence), colorization of speaker
+[2] 
+
 ### TODO
-[] Resolve ./stream -- unable to open audio capture device on ODROID1.
+[ ] 23-05-29 Create python script to convert Audio Tools Library Audio from ESP32 -> diart_whisper_mqtt.python
+[ ] Add | before each line with color coding provided from Diart
+[ ] Modify Lilypad T-Display S3 Case to include lipo battery, i2s mic & magnet/clip attachment.
+[ ] Make Caption text bigger (3-4 lines & 30 characters max) on Lilypad ESP32
+[x] MQTT -> ESP32 line by line captions will display 10 lines including most recent line.
+[x] 23-05-23 Resolve ./stream -- unable to open audio capture device on ODROID1.
 [x] 23-05-22 Add whisper.cpp & tiny-en model [4]
 * Tested to work using ```arecord -D hw:1,0 -f S24_3LE -r 44100 -c 2 --duration=10 test.wav``` 
 * blocked by ```./stream -m models/ggml-tiny.en.bin --step 4000 --length 8000 -t 4 -ac 512```. Issue: Unable to open audio device for capture.
 
 ## Dev Log
+
+23-05-30 
+* Implemention of Diart -> WhisperAI-Timestamped -> MQTT [1]
+* Ell got ESP32 with Audio Tools Library to stream to CymaProd
+* Printed Lilypad ESP32 case for test fit.
+
 
 Progress update Day #2: I now have Whisper AI model running on an ODROID N2 (beefier RPI alternative) with Ubuntu minimal installed. Verified it was able to caption my test recording test.wav (recording by connecting the Blue Yeti X USB mic to the ODROID1 and recorded using:
 ```arecord -D hw:1,0 -f S24_3LE -r 44100 -c 2 --duration=10 test.wav```
