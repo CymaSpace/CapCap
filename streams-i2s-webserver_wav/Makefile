@@ -73,7 +73,8 @@ MAKE_DIR   := $(PWD)
 #OTA_PORT   ?= 8266
 #OTA_PASS   ?=
 # ----- setup for Arduino Uno
-FQBN        ?= arduino:avr:uno
+#FQBN        ?= esp32:esp32:lilygo_t_display_s3
+FQBN        ?= esp32:esp32:esp32da
 # ----- ---------------------
 V          ?= 0
 VFLAG      =
@@ -87,6 +88,10 @@ ifndef SERIAL_DEV
     SERIAL_DEV = /dev/ttyUSB0
   else ifneq (,$(wildcard /dev/ttyACM0))
     SERIAL_DEV = /dev/ttyACM0
+  else ifneq (,$(wildcard /dev/ttyACM1))
+    SERIAL_DEV = /dev/ttyACM1
+  else ifneq (,$(wildcard /dev/ttyACM2))
+    SERIAL_DEV = /dev/ttyACM2
   else
     SERIAL_DEV = unknown
   endif
@@ -98,7 +103,6 @@ SRC        := $(wildcard *.ino)
 HDRS       := $(wildcard *.h)
 BIN        := $(BUILD_DIR)/$(SRC).bin
 ELF        := $(BUILD_DIR)/$(SRC).elf
-
 $(info FQBN       is [${FQBN}])
 $(info IOT_NAME   is [${IOT_NAME}])
 $(info OTA_PORT   is [${OTA_PORT}])
@@ -155,6 +159,9 @@ clean:
 
 find:
 	avahi-browse _arduino._tcp --resolve --parsable --terminate
+
+monitor:
+	arduino-cli monitor -p $(SERIAL_DEV)
 
 requirements:
 	@if [ -e requirements.txt ]; \
